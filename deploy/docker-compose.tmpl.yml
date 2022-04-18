@@ -29,7 +29,6 @@ services:
       traefik-net:
       auth-net:
     volumes:
-      - log-vol:${NIFI_REGISTRY_HOME}/logs
       - conf-vol:${NIFI_REGISTRY_HOME}/conf
       - database-vol:${NIFI_REGISTRY_HOME}/database
       - flow-storage-vol:${NIFI_REGISTRY_HOME}/flow_storage
