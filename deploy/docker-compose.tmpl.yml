@@ -74,7 +74,3 @@ networks:
     name: ${AUTH_NET_NAME:-auth-net}
     driver: ${AUTH_NET_DRIVER:-overlay}
     external: true
-
-volumes:
-  log-vol:
-    name: ${LOG_VOL_NAME:-nifi-registry-log-vol}
