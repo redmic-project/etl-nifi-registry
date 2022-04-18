@@ -29,4 +29,5 @@ volumes:
   security-vol:
     name: ${SECURITY_VOL_NAME}
     driver: 'cloudstor:aws'
-    external: true
+    driver_opts:
+      backing: shared
