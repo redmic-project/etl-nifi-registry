@@ -1,0 +1,14 @@
+include:
+  - project: 'redmic-project/gitlab-ci-templates'
+    ref: master
+    file: '/deployment.yml'
+
+stages:
+  - deploy
+
+.deploy:
+  variables:
+    STACK: etl
+    STATUS_CHECK_DELAY: 300
+  environment:
+    url: https://nifi-registry.${PUBLIC_HOSTNAME}
