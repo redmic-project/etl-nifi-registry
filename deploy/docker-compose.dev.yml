@@ -28,4 +28,7 @@ volumes:
   security-vol:
     name: ${SECURITY_VOL_NAME}
     driver: local
-    external: true
+    driver_opts:
+      type: ${VOL_TYPE}
+      o: addr=${VOL_ADDR},${VOL_OPTIONS}
+      device: ${SECURITY_VOL_DEVICE:-:/nifi-security-vol/}
