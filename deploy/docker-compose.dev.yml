@@ -31,4 +31,4 @@ volumes:
     driver_opts:
       type: ${VOL_TYPE}
       o: addr=${VOL_ADDR},${VOL_OPTIONS}
-      device: ${SECURITY_VOL_DEVICE:-:/nifi-security-vol/}
+      device: ${SECURITY_VOL_DEVICE:-:/nifi-registry-security-vol/}
