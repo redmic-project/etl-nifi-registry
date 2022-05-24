@@ -55,7 +55,7 @@ services:
           memory: ${RESOURCES_RESERVATIONS_MEMORY:-408M}
       labels:
         traefik.frontend.rule: Host:${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}
-        traefik.frontend.headers.customRequestHeaders: X-ProxyScheme:https||X-ProxyHost:${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}||X-ProxyPort:443||X-ProxyContextPath:/
+        traefik.frontend.headers.customRequestHeaders: X-ProxyScheme:https||X-ProxyHost:${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}||X-ProxyPort:443
         traefik.frontend.redirect.regex: ^(.*://${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME})/$$
         traefik.frontend.redirect.replacement: $$1/nifi-registry
         traefik.frontend.redirect.permanent: 'true'
