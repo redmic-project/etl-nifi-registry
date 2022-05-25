@@ -25,6 +25,11 @@ services:
       AUTH:
       NIFI_REGISTRY_WEB_HTTPS_HOST:
       NIFI_REGISTRY_WEB_HTTPS_PORT:
+      NIFI_REGISTRY_FLOW_PROVIDER:
+      NIFI_REGISTRY_GIT_PASSWORD:
+      NIFI_REGISTRY_GIT_REMOTE:
+      NIFI_REGISTRY_GIT_REPO:
+      NIFI_REGISTRY_GIT_USER:
     networks:
       traefik-net:
       auth-net:
