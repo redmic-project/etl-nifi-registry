@@ -6,7 +6,7 @@ volumes:
     driver: local
     driver_opts:
       type: ${VOL_TYPE}
-      o: addr=${VOL_ADDR},${VOL_OPTIONS}
+      o: addr=${VOL_ADDR},${VOL_OPTS}
       device: ${CONF_VOL_DEVICE:-:/nifi-registry-conf-vol/}
 
   database-vol:
@@ -14,7 +14,7 @@ volumes:
     driver: local
     driver_opts:
       type: ${VOL_TYPE}
-      o: addr=${VOL_ADDR},${VOL_OPTIONS}
+      o: addr=${VOL_ADDR},${VOL_OPTS}
       device: ${DATABASE_VOL_DEVICE:-:/nifi-registry-database-vol/}
 
   flow-storage-vol:
@@ -22,7 +22,7 @@ volumes:
     driver: local
     driver_opts:
       type: ${VOL_TYPE}
-      o: addr=${VOL_ADDR},${VOL_OPTIONS}
+      o: addr=${VOL_ADDR},${VOL_OPTS}
       device: ${FLOW_STORAGE_VOL_DEVICE:-:/nifi-registry-flow-storage-vol/}
 
   security-vol:
@@ -30,5 +30,5 @@ volumes:
     driver: local
     driver_opts:
       type: ${VOL_TYPE}
-      o: addr=${VOL_ADDR},${VOL_OPTIONS}
-      device: ${SECURITY_VOL_DEVICE:-:/nifi-registry-security-vol/}
+      o: addr=${VOL_ADDR},${VOL_OPTS}
+      device: ${SECURITY_VOL_DEVICE:-:/nifi-security-vol/}

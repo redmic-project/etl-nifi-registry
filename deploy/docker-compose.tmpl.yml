@@ -43,21 +43,21 @@ services:
       interval: ${HEALTHCHECK_INTERVAL:-30s}
       timeout: ${HEALTHCHECK_TIMEOUT:-15s}
       retries: ${HEALTHCHECK_RETRIES:-10}
-      start_period: ${HEALTHCHECK_START_PERIOD:-5m}
+      start_period: ${HEALTHCHECK_START_PERIOD:-2m}
     deploy:
       mode: replicated
       replicas: 1
       restart_policy:
         delay: ${RESTART_DELAY:-10s}
       update_config:
-        delay: ${UPDATE_DELAY:-10m}
+        delay: ${UPDATE_DELAY:-1m}
       resources:
         limits:
           cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
-          memory: ${RESOURCES_LIMITS_MEMORY:-512M}
+          memory: ${RESOURCES_LIMITS_MEMORY:-1G}
         reservations:
           cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.2}'
-          memory: ${RESOURCES_RESERVATIONS_MEMORY:-408M}
+          memory: ${RESOURCES_RESERVATIONS_MEMORY:-800M}
       labels:
         traefik.frontend.rule: Host:${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}
         traefik.frontend.headers.customRequestHeaders: X-ProxyScheme:https||X-ProxyHost:${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}||X-ProxyPort:443
