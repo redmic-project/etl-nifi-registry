@@ -30,6 +30,7 @@ services:
       NIFI_REGISTRY_GIT_REMOTE:
       NIFI_REGISTRY_GIT_REPO:
       NIFI_REGISTRY_GIT_USER:
+    hostname: nifi-registry
     networks:
       traefik-net:
       auth-net:
