@@ -1,0 +1,81 @@
+version: '3.9'
+
+services:
+  nifi-registry:
+    image: ${IMAGE_NAME:-apache/nifi-registry}:${IMAGE_TAG:-latest}
+    environment:
+      HOME: ${NIFI_REGISTRY_HOME}/conf
+      NIFI_WEB_PROXY_HOST: ${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}:443
+      TRUSTSTORE_PATH: ${NIFI_REGISTRY_HOME}/security/nifi-registry/truststore.jks
+      KEYSTORE_PATH: ${NIFI_REGISTRY_HOME}/security/nifi-registry/keystore.jks
+      NIFI_REGISTRY_HOME:
+      INITIAL_ADMIN_IDENTITY:
+      LDAP_AUTHENTICATION_STRATEGY:
+      LDAP_MANAGER_DN:
+      LDAP_MANAGER_PASSWORD:
+      LDAP_USER_SEARCH_BASE:
+      LDAP_USER_SEARCH_FILTER:
+      LDAP_IDENTITY_STRATEGY:
+      LDAP_URL:
+      KEYSTORE_TYPE:
+      KEYSTORE_PASSWORD:
+      KEY_PASSWORD:
+      TRUSTSTORE_PASSWORD:
+      TRUSTSTORE_TYPE:
+      AUTH:
+      NIFI_REGISTRY_WEB_HTTPS_HOST:
+      NIFI_REGISTRY_WEB_HTTPS_PORT:
+      NIFI_REGISTRY_FLOW_PROVIDER:
+      NIFI_REGISTRY_GIT_PASSWORD:
+      NIFI_REGISTRY_GIT_REMOTE:
+      NIFI_REGISTRY_GIT_REPO:
+      NIFI_REGISTRY_GIT_USER:
+    hostname: nifi-registry
+    networks:
+      traefik-net:
+      auth-net:
+    volumes:
+      - conf-vol:${NIFI_REGISTRY_HOME}/conf
+      - database-vol:${NIFI_REGISTRY_HOME}/database
+      - flow-storage-vol:${NIFI_REGISTRY_HOME}/flow_storage
+      - security-vol:${NIFI_REGISTRY_HOME}/security
+    healthcheck:
+      test: curl --silent --output /dev/null --insecure https://localhost:${NIFI_REGISTRY_WEB_HTTPS_PORT}/nifi-registry
+      interval: ${HEALTHCHECK_INTERVAL:-30s}
+      timeout: ${HEALTHCHECK_TIMEOUT:-15s}
+      retries: ${HEALTHCHECK_RETRIES:-10}
+      start_period: ${HEALTHCHECK_START_PERIOD:-2m}
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: ${RESTART_DELAY:-10s}
+      update_config:
+        delay: ${UPDATE_DELAY:-1m}
+      resources:
+        limits:
+          cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
+          memory: ${RESOURCES_LIMITS_MEMORY:-1G}
+        reservations:
+          cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.2}'
+          memory: ${RESOURCES_RESERVATIONS_MEMORY:-800M}
+      labels:
+        traefik.frontend.rule: Host:${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}
+        traefik.frontend.headers.customRequestHeaders: X-ProxyScheme:https||X-ProxyHost:${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}||X-ProxyPort:443
+        traefik.frontend.redirect.regex: ^(.*://${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME})/$$
+        traefik.frontend.redirect.replacement: $$1/nifi-registry
+        traefik.frontend.redirect.permanent: 'true'
+        traefik.backend: nifi-registry
+        traefik.protocol: https
+        traefik.port: '${NIFI_REGISTRY_WEB_HTTPS_PORT}'
+
+networks:
+  traefik-net:
+    name: ${TRAEFIK_NET_NAME:-traefik-net}
+    driver: ${TRAEFIK_NET_DRIVER:-overlay}
+    external: true
+
+  auth-net:
+    name: ${AUTH_NET_NAME:-auth-net}
+    driver: ${AUTH_NET_DRIVER:-overlay}
+    external: true

@@ -1,0 +1,34 @@
+version: '3.9'
+
+volumes:
+  conf-vol:
+    name: ${CONF_VOL_NAME}
+    driver: local
+    driver_opts:
+      type: ${VOL_TYPE}
+      o: addr=${VOL_ADDR},${VOL_OPTS}
+      device: ${CONF_VOL_DEVICE:-:/nifi-registry-conf-vol/}
+
+  database-vol:
+    name: ${DATABASE_VOL_NAME}
+    driver: local
+    driver_opts:
+      type: ${VOL_TYPE}
+      o: addr=${VOL_ADDR},${VOL_OPTS}
+      device: ${DATABASE_VOL_DEVICE:-:/nifi-registry-database-vol/}
+
+  flow-storage-vol:
+    name: ${FLOW_STORAGE_VOL_NAME}
+    driver: local
+    driver_opts:
+      type: ${VOL_TYPE}
+      o: addr=${VOL_ADDR},${VOL_OPTS}
+      device: ${FLOW_STORAGE_VOL_DEVICE:-:/nifi-registry-flow-storage-vol/}
+
+  security-vol:
+    name: ${SECURITY_VOL_NAME}
+    driver: local
+    driver_opts:
+      type: ${VOL_TYPE}
+      o: addr=${VOL_ADDR},${VOL_OPTS}
+      device: ${SECURITY_VOL_DEVICE:-:/nifi-security-vol/}
