@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   nifi-registry:
     image: ${IMAGE_NAME:-apache/nifi-registry}:${IMAGE_TAG:-latest}
@@ -57,7 +55,7 @@ services:
           cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
           memory: ${RESOURCES_LIMITS_MEMORY:-1G}
         reservations:
-          cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.2}'
+          cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.01}'
           memory: ${RESOURCES_RESERVATIONS_MEMORY:-800M}
       labels:
         traefik.enable: ${TRAEFIK_ENABLE:-true}
